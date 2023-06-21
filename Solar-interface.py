@@ -63,10 +63,10 @@ if choice == '🏡 Home':
     st.markdown("# *Advantages:*")
     st.write("")
     st.markdown("*Some of the factors for choosing the solar power generation are listed below.*")
-    st.markdown("### ➼ Solar energy is available freely and conveniently in nature and it needs no mains supply.")
-    st.markdown("### ➼ Solar generation plant can be installed in a few months while the conventional power plants take several years to build an electricity generation plant.")
-    st.markdown("### ➼ Solar power is clean energy as it produces no air or water pollution. Also, there are no moving parts to create noise pollution. Unlike fossil fuels, no toxic emissions are released into the atmosphere during solar energy power generation.")
-    st.markdown("### ➼ Solar power has less running cost that means once the capital investment is made, there is no need for continues purchase of fossil fuels as the solar energy is effectively free in nature.")
+    st.markdown(" ➼ Solar energy is available freely and conveniently in nature and it needs no mains supply.")
+    st.markdown(" ➼ Solar generation plant can be installed in a few months while the conventional power plants take several years to build an electricity generation plant.")
+    st.markdown(" ➼ Solar power is clean energy as it produces no air or water pollution. Also, there are no moving parts to create noise pollution. Unlike fossil fuels, no toxic emissions are released into the atmosphere during solar energy power generation.")
+    st.markdown(" ➼ Solar power has less running cost that means once the capital investment is made, there is no need for continues purchase of fossil fuels as the solar energy is effectively free in nature.")
     
     
         
@@ -189,21 +189,25 @@ elif choice == '🎯 Generate Prediction':
     if algo == 'Linear Regression':
         model = joblib.load('LR.pkl')
         prediction = model.predict(df_pred)
+        st.snow()
         
         
     elif algo == 'KNN':
         model = joblib.load('KNN.pkl')
         prediction = model.predict(df_pred)
-        
-        
+        st.snow()
+
+    
     elif algo == 'Decision Tree':
         model = joblib.load('Decision_Tree.pkl')
         prediction = model.predict(df_pred)
-        
-        
+        st.snow()
+
+    
     elif algo == 'Random Forest':
         model = joblib.load('Random_forest.pkl')
         prediction = model.predict(df_pred)
+        st.snow()
     
     
     #Making predictions
