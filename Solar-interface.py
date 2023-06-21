@@ -137,7 +137,7 @@ elif choice == '📈 Data Visualization':
     
     
     elif chart == 'Area Chart':
-        st.markdown("### **The Ideal Graph of Solar Power Generation:**")
+        st.markdown("*The Ideal Graph of Solar Power Generation:*")
         st.write("")
         plost.area_chart(
         data,
