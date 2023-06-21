@@ -189,25 +189,25 @@ elif choice == '🎯 Generate Prediction':
     if algo == 'Linear Regression':
         model = joblib.load('LR.pkl')
         prediction = model.predict(df_pred)
-        st.snow()
+        #st.snow()
         
         
     elif algo == 'KNN':
         model = joblib.load('KNN.pkl')
         prediction = model.predict(df_pred)
-        st.snow()
+        #st.snow()
 
     
     elif algo == 'Decision Tree':
         model = joblib.load('Decision_Tree.pkl')
         prediction = model.predict(df_pred)
-        st.snow()
+        #st.snow()
 
     
     elif algo == 'Random Forest':
         model = joblib.load('Random_forest.pkl')
         prediction = model.predict(df_pred)
-        st.snow()
+        #st.snow()
     
     
     #Making predictions
