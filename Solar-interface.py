@@ -36,8 +36,8 @@ if choice == '🏡 Home':
     stc.html(html_temp)
     img = st.image("solimg.jpg")
 
-    bg = """<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="f90706e6-d751-43e2-afa8-2f94be05c411" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>"""
-    stc.html(bg)
+    #bg = """<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="f90706e6-d751-43e2-afa8-2f94be05c411" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>"""
+    #stc.html(bg)
     
     st.markdown("The objective of this project is to leverage machine learning techniques, such as **Linear Regression, k-nearest neighbor (KNN), Decision Tree and Random Forest Regressor**, compare the evaluation metrics of the models and chose the best one to predict solar power generation based on the dataset. *By achieving accurate predictions, this project aims to assist in efficient energy management and facilitate the integration of solar power into the existing power grid.*")
     
