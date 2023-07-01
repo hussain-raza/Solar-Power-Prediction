@@ -9,23 +9,26 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plost
 
-#import streamlit_authenticator as auth
 
-#import pandas_profiling
-#from streamlit_pandas_profiling import st_profile_report
-
-
-#Setting Page icon
+#Setting Page icon & configuration
 
 img = Image.open("icon.jpg")
 PAGE_CONFIG = {"page_title":"Solar Power App","page_icon":img,"layout":"centered"}
 st.set_page_config(**PAGE_CONFIG)
 
-# '✔️ Login/ Signup','📈 Forecast Analysis','📁 Load Data'
+
+@st.cache_data
+def caching():
+    st.header("Enhancing Performance!")
+
+st.cache_data.clear()    
+    
+    
+# Creating menu
+
 menu = ['🏡 Home', '📈 Data Visualization', '🎯 Generate Prediction','🖊 Comment Section']
 choice = st.sidebar.radio('Menu',menu)
 
-##3872fb    #fb7938
 
 if choice == '🏡 Home':
     #st.title("SOLAR POWER GENERATION FORECASTING")
@@ -35,9 +38,6 @@ if choice == '🏡 Home':
     </div>"""
     stc.html(html_temp)
     img = st.image("solimg.jpg")
-
-    #bg = """<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="f90706e6-d751-43e2-afa8-2f94be05c411" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>"""
-    #stc.html(bg)
     
     st.markdown("The objective of this project is to leverage machine learning techniques, such as **Linear Regression, k-nearest neighbor (KNN), Decision Tree and Random Forest Regressor**, compare the evaluation metrics of the models and chose the best one to predict solar power generation based on the dataset. *By achieving accurate predictions, this project aims to assist in efficient energy management and facilitate the integration of solar power into the existing power grid.*")
     
@@ -90,23 +90,30 @@ elif choice == '📈 Data Visualization':
     
     
     if chart == 'Line Chart':
-        plost.line_chart(data, x= 'AMBIENT_TEMPERATURE', y= 'AC_POWER', 
-        width=500, color = "#17d196", 
-        title='AC power based on Ambient Temperature', legend='bottom')
-    
+        @st.cache_resource
+        def line():
+            #st.header("Faster loading!...")
+            plost.line_chart(data, x= 'AMBIENT_TEMPERATURE', y= 'AC_POWER', 
+            width=500, color = "#17d196", 
+            title='AC power based on Ambient Temperature', legend='bottom')
+        line()
+        
         st.write("")
         st.write("")
         st.write("")
     
     elif chart == 'Bar Chart':
-        plost.bar_chart(
-        data,
-        bar='IRRADIATION',
-        value=['DC_POWER', 'AC_POWER'],
-        group='value',
-        stack=True,
-        color='IRRADIATION',
-        legend="top",)
+        @st.cache_resource
+        def bar():
+            plost.bar_chart(
+            data,
+            bar='IRRADIATION',
+            value=['DC_POWER', 'AC_POWER'],
+            group='value',
+            stack=True,
+            color='IRRADIATION',
+            legend="top",)
+        bar()
     
     
         st.write("")
@@ -114,12 +121,15 @@ elif choice == '📈 Data Visualization':
         st.write("")    
     
     elif chart == 'Histogram':
-        plost.hist(
-        data,
-        x='IRRADIATION',
-        y= 'DAILY_YIELD',
-        aggregate='median',
-        title='Irradiation vs Daily Yield', legend='bottom')
+        @st.cache_resource
+        def hist():
+            plost.hist(
+            data,
+            x='IRRADIATION',
+            y= 'DAILY_YIELD',
+            aggregate='median',
+            title='Irradiation vs Daily Yield', legend='bottom')
+        hist()
     
     
         st.write("")
@@ -127,12 +137,15 @@ elif choice == '📈 Data Visualization':
         st.write("")
     
     elif chart == 'Scatter Plot':
-        plost.scatter_chart(
-        data,
-        x='AMBIENT_TEMPERATURE',
-        y=['DC_POWER', 'AC_POWER'],
-        size='IRRADIATION',
-        height=500)
+        @st.cache_resource
+        def sct():
+            plost.scatter_chart(
+            data,
+            x='AMBIENT_TEMPERATURE',
+            y=['DC_POWER', 'AC_POWER'],
+            size='IRRADIATION',
+            height=500)
+        sct()
         
         st.write("")
         st.write("")
@@ -140,26 +153,22 @@ elif choice == '📈 Data Visualization':
     
     
     elif chart == 'Area Chart':
-        st.markdown("*The Ideal Graph of Solar Power Generation:*")
-        st.write("")
-        plost.area_chart(
-        data,
-        x=dict(field='DATE_TIME', timeUnit='hours'),
-        y=dict(field='AC_POWER', aggregate='mean'),
-        color='IRRADIATION',)
-    
-
-
-       
-elif choice == '✔️ Login/ Signup':
-    with st.form(key = "mylogin", clear_on_submit = True):
-        user = st.text_input("Username:")
-        pasw = st.text_input("Password:")
-        st.form_submit_button("Login")
+        @st.cache_resource
+        def area():
+            st.markdown("**The Ideal Graph of Solar Power Generation:**")
+            st.write("")
+            plost.area_chart(
+            data,
+            x=dict(field='DATE_TIME', timeUnit='hours'),
+            y=dict(field='AC_POWER', aggregate='mean'),
+            color='IRRADIATION',)
+        area()
+        
+    st.cache_resource.clear()
         
 
 elif choice == '🎯 Generate Prediction':
-    # Feature vector
+    # Feature vector 
     #X = data[['DAILY_YIELD', 'TOTAL_YIELD', 'AMBIENT_TEMPERATURE', 'IRRADIATION']]
     #y = data['AC_POWER']
     
@@ -192,25 +201,21 @@ elif choice == '🎯 Generate Prediction':
     if algo == 'Linear Regression':
         model = joblib.load('LR.pkl')
         prediction = model.predict(df_pred)
-        #st.snow()
         
         
     elif algo == 'KNN':
         model = joblib.load('KNN.pkl')
         prediction = model.predict(df_pred)
-        #st.snow()
-
-    
+        
+        
     elif algo == 'Decision Tree':
         model = joblib.load('Decision_Tree.pkl')
         prediction = model.predict(df_pred)
-        #st.snow()
-
-    
+        
+        
     elif algo == 'Random Forest':
         model = joblib.load('Random_forest.pkl')
         prediction = model.predict(df_pred)
-        #st.snow()
     
     
     #Making predictions
@@ -223,56 +228,19 @@ elif choice == '🎯 Generate Prediction':
         #st.balloons()
 
 
-
-elif choice == '📈 Forecast Analysis':
-    #pass
-    plant = st.selectbox("Select Plant to show dataset", options = ['Plant1', 'Plant2'])
-    if plant == 'Plant1': 
-        gen1 = pd.read_csv('Plant_1_Generation_Data.csv')
-        gp1 = gen1.profile_report()
-        st_profile_report(gp1)
-        wet1 = pd.read_csv('Plant_1_Weather_Sensor_Data.csv')
-        wp1 = wet1.profile_report()
-        st_profile_report(wp1)
-
-      
-#multiple files upload
-elif choice == '📁 Load Data':
-    files = st.file_uploader("Please select a CSV file", accept_multiple_files = True)
-    for file in files:
-        df = pd.read_csv(file)
-        st.write("File uploaded:", file.name)
-        st.dataframe(df.head())
-    
-    colc, cold, cole= st.columns([2.8,4,1])
-    with cold:
-        st.title('Load Data')
-    Date = st.date_input('Select Date')
-    st.write('')
-    st.write('')
-    if st.button('Load'):
-        #Data = Date.dt.date.astype(str)
-        df_data = pd.read_csv('final_dataset.csv',index_col=0)
-        df_data['Date'] = pd.to_datetime(df_data['DATE_TIME']).dt.date.astype(str)
-        #df_data['Date'] = df_data['Date'].apply(lambda x: str(x).replace('-','/'))
-        Date = str(Date)
-        data_display = df_data[df_data['Date']== Date].iloc[:,:-1].copy()
-        st.dataframe(data_display)
-        csv_downloader(data_display)
-
-
 elif choice == '🖊 Comment Section':
-    com = st.text_area("Comment your feedback/ suggestions here:",height=100)
-    date = st.date_input('Select Date')
-    if st.button("Submit"):
-        #st.write("Thank You!")
-        
-        comment_section = pd.read_csv('comment_df.csv', index_col=0)
-        comment_section = comment_section.append({'Date':str(date), 'Comment': com}, ignore_index=True)
-        comment_section.to_csv('comment_df.csv')
-        st.success("Your response has been recorded!")
-        st.balloons()
-        st.write('')
-
+    with st.form(key = "myComment", clear_on_submit = True):
+        com = st.text_area("Comment your feedback/ suggestions here:",height=100)
+        date = st.date_input('Select Date')
     
+        if st.form_submit_button("Submit"):
+
+            #st.form_submit_button("Submit")
+            comment_section = pd.read_csv('comment_df.csv', index_col=0)
+            comment_section = comment_section.append({'Date':str(date), 'Comment': com}, ignore_index=True)
+            comment_section.to_csv('comment_df.csv')
+            st.success("Your response has been recorded!")
+            st.balloons()
+            st.write('')
+
     
