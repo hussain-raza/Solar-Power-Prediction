@@ -180,7 +180,7 @@ elif choice == '🎯 Generate Prediction':
         st.markdown(f"Greetings! **{name}**, Welcome to our App.")
         
         
-    algo = st.selectbox('Choose an Algorithm: ', ['Linear Regression','KNN', 'Decision Tree', 'Random Forest'])
+    #algo = st.selectbox('Choose an Algorithm: ', ['Linear Regression','KNN', 'Decision Tree', 'Random Forest'])
     
     col1, col2 = st.columns(2)
     
@@ -198,24 +198,24 @@ elif choice == '🎯 Generate Prediction':
     df_pred = pd.DataFrame(test_data)
     
     #loading the models
-    if algo == 'Linear Regression':
-        model = joblib.load('LR.pkl')
-        prediction = model.predict(df_pred)
+    #if algo == 'Linear Regression':
+    #    model = joblib.load('LR.pkl')
+    #    prediction = model.predict(df_pred)
         
         
-    elif algo == 'KNN':
-        model = joblib.load('KNN.pkl')
-        prediction = model.predict(df_pred)
+    #elif algo == 'KNN':
+    #    model = joblib.load('KNN.pkl')
+    #    prediction = model.predict(df_pred)
         
         
-    elif algo == 'Decision Tree':
-        model = joblib.load('Decision_Tree.pkl')
-        prediction = model.predict(df_pred)
+    #elif algo == 'Decision Tree':
+    model = joblib.load('Decision_Tree.pkl')
+    prediction = model.predict(df_pred)
         
         
-    elif algo == 'Random Forest':
-        model = joblib.load('Random_forest.pkl')
-        prediction = model.predict(df_pred)
+    #elif algo == 'Random Forest':
+    #    model = joblib.load('Random_forest.pkl')
+    #    prediction = model.predict(df_pred)
     
     
     #Making predictions
